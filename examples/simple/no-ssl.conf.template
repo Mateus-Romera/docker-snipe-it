@@ -1,0 +1,64 @@
+# ----------------------------------------------------------------------
+# | Config file for non-secure $NGINX_HOST host                        |
+# ----------------------------------------------------------------------
+#
+# This file is a template for a non-secure Nginx server.
+# This Nginx server listens for the $NGINX_HOST host and handles requests.
+# Replace $NGINX_HOST in docker-compose.yml with your hostname before enabling.
+
+# Upstream blocks to abstract backend connection(s):
+# Direct connection with sock
+upstream default {
+    server ${NGINX_UPSTREAM};
+}
+
+server {
+    # The port the server will listen to
+    # listen [::]:${NGINX_PORT};
+    listen ${NGINX_PORT};
+
+    # The host name to respond to
+    server_name ${NGINX_HOST};
+
+    # Path for static files
+    root /var/www/html/public;
+
+    # This should be in your http block and if it is, it's not needed here
+    index index.html index.php;
+
+    # Application settings
+    location = /favicon.ico {
+        log_not_found off;
+        access_log off;
+    }
+
+    location = /robots.txt {
+        allow all;
+        log_not_found off;
+        access_log off;
+    }
+
+    location / {
+        # This is cool because no php is touched for static content.
+        # include the "?$args" part so non-default permalinks doesn't break when using query string
+        try_files $uri $uri/ /index.php?$args;
+    }
+
+    location ~ \.php$ {
+        #NOTE: You should have "cgi.fix_pathinfo = 0;" in php.ini
+        include fastcgi_params;
+        fastcgi_intercept_errors on;
+        fastcgi_pass default;
+        #The following parameter can be also included in fastcgi_params file
+        fastcgi_param  SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        
+        # try_files $uri =404;
+        # fastcgi_index index.php;
+        # fastcgi_param PATH_INFO $fastcgi_path_info;
+    }
+
+    location ~* \.(js|css|png|jpg|jpeg|gif|ico)$ {
+        expires max;
+        log_not_found off;
+    }
+}
