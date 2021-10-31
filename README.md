@@ -163,7 +163,9 @@ Run `docker-compose up`, wait for it to initialize completely, and visit `http:/
 ## TODO
 
 - get new versions from snipe-it releases automatically;
-- create CI using github actions to build new images everyday;
+- create CI using github actions for:
+    - build new images everyday;
+    - use trivy to scan images for CVE;
 - add images for:
     - fpm-buster;
     - buster (apache);
