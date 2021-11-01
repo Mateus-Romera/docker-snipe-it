@@ -41,29 +41,29 @@ generate_app_key() {
 populate_env_file() {
   { \
     # REQUIRED: DATABASE SETTINGS
-    echo 'DB_CONNECTION=${DB_CONNECTION:-mysql}'; \
-    echo 'DB_PREFIX=${DB_PREFIX:-null}'; \
-    echo 'DB_DUMP_PATH=${DB_DUMP_PATH:-"/usr/bin"}'; \
+    echo "DB_CONNECTION=${DB_CONNECTION:-mysql}"; \
+    echo "DB_PREFIX=${DB_PREFIX:-null}"; \
+    echo "DB_DUMP_PATH=${DB_DUMP_PATH:-'/usr/bin'}"; \
     # REQUIRED: OUTGOING MAIL SERVER SETTINGS
-    echo 'MAIL_DRIVER=${MAIL_DRIVER:-smtp}'; \
-    echo 'MAIL_ENCRYPTION=${MAIL_ENV_ENCRYPTION}'; \
-    echo 'MAIL_FROM_ADDR=${MAIL_ENV_FROM_ADDR}'; \
-    echo 'MAIL_FROM_NAME=${MAIL_ENV_FROM_NAME}'; \
-    echo 'MAIL_REPLYTO_ADDR=${MAIL_ENV_FROM_ADDR}'; \
-    echo 'MAIL_REPLYTO_NAME=${MAIL_ENV_FROM_NAME}'; \
+    echo "MAIL_DRIVER=${MAIL_DRIVER:-smtp}"; \
+    echo "MAIL_ENCRYPTION=${MAIL_ENV_ENCRYPTION}"; \
+    echo "MAIL_FROM_ADDR=${MAIL_ENV_FROM_ADDR}"; \
+    echo "MAIL_FROM_NAME=${MAIL_ENV_FROM_NAME}"; \
+    echo "MAIL_REPLYTO_ADDR=${MAIL_ENV_FROM_ADDR}"; \
+    echo "MAIL_REPLYTO_NAME=${MAIL_ENV_FROM_NAME}"; \
     # REQUIRED: IMAGE LIBRARY
-    echo 'IMAGE_LIB=${IMAGE_LIB:-gd}'; \
+    echo "IMAGE_LIB=${IMAGE_LIB:-gd}"; \
     # OPTIONAL: SESSION SETTINGS
-    echo 'SESSION_LIFETIME=12000'; \
-    echo 'EXPIRE_ON_CLOSE=false'; \
-    echo 'ENCRYPT=false'; \
-    echo 'COOKIE_NAME=snipeit_session'; \
-    echo 'COOKIE_DOMAIN=null'; \
-    echo 'SECURE_COOKIES=false'; \
+    echo "SESSION_LIFETIME=12000"; \
+    echo "EXPIRE_ON_CLOSE=false"; \
+    echo "ENCRYPT=false"; \
+    echo "COOKIE_NAME=snipeit_session"; \
+    echo "COOKIE_DOMAIN=null"; \
+    echo "SECURE_COOKIES=false"; \
   # OPTIONAL: CACHE SETTINGS
-    echo 'CACHE_DRIVER=file'; \
-    echo 'SESSION_DRIVER=file'; \
-    echo 'QUEUE_DRIVER=sync'; \
+    echo "CACHE_DRIVER=file"; \
+    echo "SESSION_DRIVER=file"; \
+    echo "QUEUE_DRIVER=sync"; \
   } > /var/www/html/.env
 }
 
@@ -128,25 +128,31 @@ _main() {
   ln -fs \
     "/var/lib/snipeit/keys/oauth-private.key" "/var/www/html/storage/oauth-private.key"
 
-  # if the Oauth DB files are not present copy the vendor files over to the db migrations
+  # copy the vendor files over to the db migrations if the Oauth DB files are not present
   if [ ! -f "/var/www/html/database/migrations/*create_oauth*" ];then
     cp -a /var/www/html/vendor/laravel/passport/database/migrations/* /var/www/html/database/migrations/
   fi
-
-  # create laravel log file
-  touch /var/www/html/storage/logs/laravel.log
-  # add correct permissions for files and directories
-  chown -R www-data:www-data \
-    /var/www/html/storage/logs/laravel.log
-    /var/lib/snipeit/data \
-    /var/lib/snipeit/dumps \
-    /var/lib/snipeit/keys
+  # create session table migration if session driver is set to database
+  if [ "${SESSION_DRIVER}" == "database" ]
+  then
+    cp -a /var/www/html/vendor/laravel/framework/src/Illuminate/Session/Console/stubs/database.stub /var/www/html/database/migrations/2021_05_06_0000_create_sessions_table.php
+  fi
 
   # migrate/create database
   php artisan migrate --force
   # clear cache files
   php artisan config:clear
   php artisan config:cache
+
+  # create laravel log file
+  touch /var/www/html/storage/logs/laravel.log
+  # add correct permissions for files and directories
+  chown -R www-data:www-data \
+    /var/www/html/storage/framework/cache \
+    /var/www/html/storage/logs/laravel.log \
+    /var/lib/snipeit/data \
+    /var/lib/snipeit/dumps \
+    /var/lib/snipeit/keys
 
   exec "$@"
 }
