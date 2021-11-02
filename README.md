@@ -40,7 +40,9 @@ Example `docker-compose.yaml` for `snipe-it`:
 
 ```yaml
 volumes:
+  snipeit_data:
   web:
+  database:
 
 services:
   snipeit:
@@ -59,15 +61,17 @@ services:
       SECURE_COOKIES: "false"
     volumes:
       - web:/var/www/html
+      - snipeit_data:/var/lib/snipeit
     depends_on:
       - mariadb
+    restart: on-failure
 
   nginx:
     image: docker.io/nginx:1.21.3-alpine
     environment:
       NGINX_HOST: localhost
       NGINX_PORT: 8080
-      NGINX_UPSTREAM: snipeit_php-fpm:9000
+      NGINX_UPSTREAM: snipeit:9000
     ports:
       - "8080:8080"
     volumes:
