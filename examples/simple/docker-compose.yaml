@@ -5,7 +5,7 @@ volumes:
 
 services:
   snipeit:
-    image: pirasbro/snipe-it:5.3.0-fpm-alpine
+    image: pirasbro/snipe-it:5.3.3-fpm-alpine
     environment:
       # SnipeIT settings
       APP_URL: localhost:8080
