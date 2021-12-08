@@ -16,7 +16,7 @@ For now, we only have a single image based on php-fpm official image.
 ## Usage
 
 ```
-$ docker pull pirasbro/snipe-it:5.3.3-fpm-alpine
+$ docker pull pirasbro/snipe-it:latest
 ```
 
 ## Docker Secrets
@@ -49,7 +49,7 @@ volumes:
 
 services:
   snipeit:
-    image: pirasbro/snipe-it:5.3.3-fpm-alpine
+    image: docker.io/pirasbro/snipe-it:latest
     environment:
       # SnipeIT settings
       APP_URL: localhost:8080
@@ -70,7 +70,7 @@ services:
     restart: on-failure
 
   nginx:
-    image: docker.io/nginx:1.21.3-alpine
+    image: docker.io/nginx:alpine
     environment:
       NGINX_HOST: localhost
       NGINX_PORT: 8080
@@ -85,7 +85,7 @@ services:
       - snipeit
 
   mariadb:
-    image: docker.io/mariadb:10.6.4-focal
+    image: docker.io/mariadb:latest
     user: mysql:mysql
     environment:
       MYSQL_ROOT_PASSWORD: dev
