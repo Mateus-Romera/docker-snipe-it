@@ -8,9 +8,9 @@ This work is heavily inspired on docker official images.
 
 For now, we only have a single image based on php-fpm official image.
 
-- [`latest`, `5.3.3-fpm-alpine`, `5.3-fpm-alpine`, `5-fpm-alpine`, `fpm-alpine`, `5.3.3-php7.4-fpm-alpine`, `5.3.3-php7.4-fpm-alpine-r0`, `5.3-php7.4-fpm-alpine`, `5-php7.4-fpm-alpine`, `php7.4-fpm-alpine`](https://github.com/Mateus-Romera/docker-snipe-it/blob/main/php7.4/fpm-alpine/Dockerfile)
-- [`5.3.2-fpm-alpine`, `5.3-fpm-alpine`, `5-fpm-alpine`, `fpm-alpine`, `5.3.2-php7.4-fpm-alpine`, `5.3.2-php7.4-fpm-alpine-r0`, `5.3-php7.4-fpm-alpine`, `5-php7.4-fpm-alpine`, `php7.4-fpm-alpine`](https://github.com/Mateus-Romera/docker-snipe-it/blob/main/php7.4/fpm-alpine/Dockerfile)
-- [`5.3.1-fpm-alpine`, `5.3-fpm-alpine`, `5-fpm-alpine`, `fpm-alpine`, `5.3.1-php7.4-fpm-alpine`, `5.3.1-php7.4-fpm-alpine-r0`, `5.3-php7.4-fpm-alpine`, `5-php7.4-fpm-alpine`, `php7.4-fpm-alpine`](https://github.com/Mateus-Romera/docker-snipe-it/blob/main/php7.4/fpm-alpine/Dockerfile)
+- [`latest`, `5.3.3-fpm-alpine`, `5.3-fpm-alpine`, `5-fpm-alpine`, `fpm-alpine`, `5.3.3-php7.4-fpm-alpine-r0`, `5.3.3-php7.4-fpm-alpine`, `5.3-php7.4-fpm-alpine`, `5-php7.4-fpm-alpine`, `php7.4-fpm-alpine`](https://github.com/Mateus-Romera/docker-snipe-it/blob/main/php7.4/fpm-alpine/Dockerfile)
+- [`5.3.2-fpm-alpine`, `5.3-fpm-alpine`, `5-fpm-alpine`, `fpm-alpine`, `5.3.2-php7.4-fpm-alpine-r0`, `5.3.2-php7.4-fpm-alpine`, `5.3-php7.4-fpm-alpine`, `5-php7.4-fpm-alpine`, `php7.4-fpm-alpine`](https://github.com/Mateus-Romera/docker-snipe-it/blob/main/php7.4/fpm-alpine/Dockerfile)
+- [`5.3.1-fpm-alpine`, `5.3-fpm-alpine`, `5-fpm-alpine`, `fpm-alpine`, `5.3.1-php7.4-fpm-alpine-r0`, `5.3.1-php7.4-fpm-alpine`, `5.3-php7.4-fpm-alpine`, `5-php7.4-fpm-alpine`, `php7.4-fpm-alpine`](https://github.com/Mateus-Romera/docker-snipe-it/blob/main/php7.4/fpm-alpine/Dockerfile)
 - [`5.3.0-fpm-alpine`, `5.3-fpm-alpine`, `5-fpm-alpine`, `fpm-alpine`, `5.3.0-php7.4-fpm-alpine`, `5.3-php7.4-fpm-alpine`, `5-php7.4-fpm-alpine`, `php7.4-fpm-alpine`](https://github.com/Mateus-Romera/docker-snipe-it/blob/main/php7.4/fpm-alpine/Dockerfile)
 
 ## Usage
